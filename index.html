@@ -1,315 +1,463 @@
-<!DOCTYPE html>
+​<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agrocampo · Modelo de Segmentación de Clientes · Documento Oficial</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap%22 rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
- 
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #f4f6fa;
             color: #1a2c3e;
-            line-height: 1.5;
+            line-height: 1.4;
         }
- 
+
         .page {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 0.8rem 1.2rem;
         }
- 
+
+        /* ===== HEADER ===== */
         .header-modern {
             background: linear-gradient(135deg, #0a2e25 0%, #1a6d5e 100%);
-            border-radius: 32px;
-            padding: 1.8rem 2.5rem;
-            margin-bottom: 2rem;
+            border-radius: 20px;
+            padding: 1rem 1.8rem;
+            margin-bottom: 0.8rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 0.6rem;
             color: white;
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 20px -8px rgba(0,0,0,0.12);
             position: relative;
             overflow: hidden;
         }
- 
+
         .header-modern::before {
             content: '';
             position: absolute;
             top: -50%;
             right: -20%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
         }
- 
+
         .logo-natural {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
             position: relative;
             z-index: 2;
+            flex-shrink: 0;
         }
- 
+
         .logo-natural img {
-            height: 55px;
+            height: 40px;
             width: auto;
+            max-width: 160px;
             object-fit: contain;
-            filter: brightness(0) invert(1);
+            display: block;
         }
- 
+
         .title-area h1 {
-            font-size: 1.8rem;
+            font-size: 1.3rem;
             font-weight: 800;
             letter-spacing: -0.02em;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.05rem;
         }
- 
+
         .title-area p {
             opacity: 0.85;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
         }
- 
+
         .version-badge {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.12);
             backdrop-filter: blur(8px);
-            padding: 0.5rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.75rem;
+            padding: 0.25rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.6rem;
             font-weight: 500;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.12);
+            white-space: nowrap;
         }
- 
+
+        /* ===== BOTÓN PDF ===== */
+        .pdf-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .btn-pdf {
+            background: #1a6d5e;
+            color: white;
+            border: none;
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(26, 109, 94, 0.2);
+        }
+
+        .btn-pdf:hover {
+            background: #0e4d41;
+            transform: translateY(-1px);
+        }
+
+        .btn-pdf i {
+            font-size: 0.8rem;
+        }
+
+        /* ===== DEFINICIÓN ===== */
+        .segmentation-definition {
+            background: white;
+            border-radius: 14px;
+            padding: 0.6rem 1.2rem;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            border-left: 5px solid #1a6d5e;
+        }
+
+        .segmentation-definition h2 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #0a2e25;
+            margin-bottom: 0.15rem;
+        }
+
+        .segmentation-definition p {
+            font-size: 0.75rem;
+            color: #2c3e50;
+            line-height: 1.5;
+        }
+
+        .segmentation-definition strong {
+            color: #1a6d5e;
+        }
+
+        /* ===== STATS ===== */
         .stats-row {
             background: white;
-            border-radius: 20px;
-            padding: 1rem 2rem;
-            margin-bottom: 2rem;
+            border-radius: 14px;
+            padding: 0.4rem 1.2rem;
+            margin-bottom: 0.8rem;
             display: flex;
-            gap: 2rem;
+            gap: 1.2rem;
             flex-wrap: wrap;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
         }
- 
+
         .stat {
             display: flex;
             align-items: baseline;
-            gap: 0.5rem;
-            font-size: 0.8rem;
+            gap: 0.3rem;
+            font-size: 0.65rem;
             color: #5a6e7c;
         }
- 
+
         .stat-number {
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 0.9rem;
             color: #1a6d5e;
         }
- 
+
+        /* ===== SEGMENTOS ===== */
         .segment-card {
             background: white;
-            border-radius: 24px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-radius: 16px;
+            margin-bottom: 0.6rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
             overflow: hidden;
-            transition: all 0.2s ease;
             border: 1px solid #eef2f6;
         }
- 
-        .segment-card:hover {
-            box-shadow: 0 12px 24px -8px rgba(0,0,0,0.1);
-            transform: translateY(-2px);
-        }
- 
+
         .segment-header {
-            padding: 1.25rem 1.75rem;
+            padding: 0.5rem 1rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
             color: white;
-            transition: opacity 0.2s;
         }
- 
+
         .segment-header-left {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.6rem;
         }
- 
+
         .segment-icon {
-            width: 48px;
-            height: 48px;
+            width: 30px;
+            height: 30px;
             background: rgba(255,255,255,0.2);
-            border-radius: 60px;
+            border-radius: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 0.8rem;
         }
- 
+
         .segment-title {
             font-weight: 700;
-            font-size: 1.1rem;
-            letter-spacing: -0.3px;
+            font-size: 0.8rem;
+            letter-spacing: -0.2px;
         }
- 
+
         .segment-sub {
-            font-size: 0.65rem;
+            font-size: 0.5rem;
             opacity: 0.85;
-            margin-top: 2px;
+            margin-top: 1px;
         }
- 
+
         .toggle-icon {
             background: rgba(255,255,255,0.15);
-            width: 32px;
-            height: 32px;
-            border-radius: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s;
-        }
- 
-        .segment-content {
-            padding: 0 1.75rem 1.75rem 1.75rem;
-            display: block;
-            border-top: 1px solid #edf2f7;
-        }
- 
-        .segment-content.hidden {
-            display: none;
-        }
- 
-        .definition-box {
-            background: #f8fafc;
-            border-left: 5px solid #3498db;
-            padding: 1rem 1.25rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-            font-size: 0.85rem;
-            line-height: 1.5;
-        }
- 
-        .criterio-box {
-            background: #eef2ff;
-            border-left: 5px solid #3b82f6;
-            padding: 1rem 1.25rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-            font-size: 0.85rem;
-        }
- 
-        .example-box {
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-            border-left: 5px solid #22c55e;
-            padding: 1rem 1.25rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-            font-size: 0.85rem;
-        }
- 
-        .subsegment-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin: 1rem 0;
-        }
- 
-        .subsegment-card {
-            background: #fefce8;
-            border-left: 5px solid #eab308;
-            padding: 1rem 1.25rem;
-            border-radius: 12px;
-        }
- 
-        .subsegment-title {
-            font-weight: 700;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-            color: #854d0e;
-        }
- 
-        .scenario-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.75rem;
-            margin-top: 1rem;
-        }
- 
-        .scenario-table th {
-            background: #f1f5f9;
-            padding: 0.75rem 1rem;
-            text-align: left;
-            font-weight: 700;
-            color: #1e293b;
-        }
- 
-        .scenario-table td {
-            padding: 0.7rem 1rem;
-            border-bottom: 1px solid #e9edf2;
-            vertical-align: top;
-        }
- 
-        .scenario-num {
-            font-weight: 700;
-            width: 45px;
-            color: #1a6d5e;
-        }
- 
-        .matrix-card {
-            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
-            border-radius: 24px;
-            padding: 1.75rem;
-            margin-top: 2rem;
-            border: 1px solid #eef2f6;
-        }
- 
-        .matrix-steps {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            margin: 1.5rem 0;
-        }
- 
-        .step {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: white;
-            padding: 0.7rem 1rem;
-            border-radius: 14px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
- 
-        .step-num {
-            width: 28px;
-            height: 28px;
-            background: #1a6d5e;
-            color: white;
+            width: 24px;
+            height: 24px;
             border-radius: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 0.75rem;
+            font-size: 0.6rem;
         }
- 
+
+        .segment-content {
+            padding: 0 1rem 0.6rem 1rem;
+            display: block;
+            border-top: 1px solid #edf2f7;
+        }
+
+        .segment-content.hidden {
+            display: none;
+        }
+
+        /* ===== CAJAS ===== */
+        .definition-box {
+            background: #f8fafc;
+            border-left: 4px solid #3498db;
+            padding: 0.35rem 0.8rem;
+            border-radius: 8px;
+            margin: 0.3rem 0;
+            font-size: 0.7rem;
+            line-height: 1.4;
+        }
+
+        .criterio-box {
+            background: #eef2ff;
+            border-left: 4px solid #3b82f6;
+            padding: 0.35rem 0.8rem;
+            border-radius: 8px;
+            margin: 0.3rem 0;
+            font-size: 0.7rem;
+        }
+
+        .criterio-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0.15rem 0 0 0;
+        }
+
+        .criterio-box ul li {
+            padding: 0.05rem 0;
+            position: relative;
+            padding-left: 0.9rem;
+            font-size: 0.68rem;
+        }
+
+        .criterio-box ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            font-weight: 700;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left: 4px solid #22c55e;
+            padding: 0.35rem 0.8rem;
+            border-radius: 8px;
+            margin: 0.3rem 0;
+            font-size: 0.7rem;
+        }
+
+        .example-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0.1rem 0 0 0;
+        }
+
+        .example-box ul li {
+            padding: 0.04rem 0;
+            position: relative;
+            padding-left: 0.9rem;
+            font-size: 0.68rem;
+        }
+
+        .example-box ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #22c55e;
+            font-weight: 700;
+        }
+
+        .example-box strong {
+            font-size: 0.7rem;
+        }
+
+        /* ===== SUBSEGMENTOS ===== */
+        .subsegment-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin: 0.3rem 0;
+        }
+
+        .subsegment-card {
+            background: #fefce8;
+            border-left: 4px solid #eab308;
+            padding: 0.4rem 0.7rem;
+            border-radius: 8px;
+        }
+
+        .subsegment-title {
+            font-weight: 700;
+            font-size: 0.7rem;
+            margin-bottom: 0.1rem;
+            color: #854d0e;
+        }
+
+        .subsegment-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0.05rem 0 0 0;
+        }
+
+        .subsegment-card ul li {
+            font-size: 0.62rem;
+            padding: 0.04rem 0;
+            position: relative;
+            padding-left: 0.8rem;
+        }
+
+        .subsegment-card ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #eab308;
+            font-weight: 700;
+        }
+
+        .subsegment-card .example-box {
+            margin-top: 0.2rem;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.6rem;
+        }
+
+        /* ===== TABLA ===== */
+        .scenario-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.6rem;
+            margin-top: 0.3rem;
+        }
+
+        .scenario-table th {
+            background: #f1f5f9;
+            padding: 0.2rem 0.4rem;
+            text-align: left;
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 0.55rem;
+        }
+
+        .scenario-table td {
+            padding: 0.15rem 0.4rem;
+            border-bottom: 1px solid #e9edf2;
+            vertical-align: top;
+            font-size: 0.55rem;
+        }
+
+        .scenario-num {
+            font-weight: 700;
+            width: 28px;
+            color: #1a6d5e;
+        }
+
+        .section-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            margin: 0.3rem 0 0.1rem 0;
+            color: #1a2c3e;
+        }
+
+        /* ===== MATRIZ ===== */
+        .matrix-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            border-radius: 16px;
+            padding: 1rem;
+            margin-top: 0.8rem;
+            border: 1px solid #eef2f6;
+        }
+
+        .matrix-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            margin: 0.5rem 0;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            padding: 0.25rem 0.6rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+            font-size: 0.65rem;
+        }
+
+        .step-num {
+            width: 20px;
+            height: 20px;
+            background: #1a6d5e;
+            color: white;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.55rem;
+            flex-shrink: 0;
+        }
+
         .badge {
             display: inline-block;
-            padding: 0.2rem 0.7rem;
-            border-radius: 20px;
-            font-size: 0.65rem;
+            padding: 0.05rem 0.35rem;
+            border-radius: 14px;
+            font-size: 0.5rem;
             font-weight: 600;
         }
         .badge-ret { background: #dcfce7; color: #166534; }
@@ -319,52 +467,240 @@
         .badge-bre { background: #f3e8ff; color: #6b21a5; }
         .badge-mkt { background: #cffafe; color: #0f766e; }
         .badge-ext { background: #fee2e2; color: #991b1b; }
- 
+
+        .rules-box {
+            margin-top: 0.4rem;
+            padding: 0.4rem 0.8rem;
+            background: #f1f5f9;
+            border-radius: 10px;
+            font-size: 0.62rem;
+            line-height: 1.5;
+        }
+
         .footer {
             text-align: center;
-            padding: 2rem;
-            font-size: 0.7rem;
+            padding: 0.6rem;
+            font-size: 0.55rem;
             color: #6c7a8a;
             border-top: 1px solid #e2e8f0;
-            margin-top: 2rem;
+            margin-top: 0.8rem;
         }
- 
+
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .page {
-                padding: 1rem;
+                padding: 0.6rem;
             }
             .header-modern {
                 flex-direction: column;
                 text-align: center;
+                padding: 0.8rem 1rem;
             }
             .subsegment-grid {
                 grid-template-columns: 1fr;
             }
+            .logo-natural img {
+                height: 32px;
+                max-width: 100px;
+            }
+            .pdf-actions {
+                justify-content: center;
+            }
+            .version-badge {
+                white-space: normal;
+            }
         }
- 
+
+        /* ===== PRINT ===== */
         @media print {
             body {
                 background: white;
                 padding: 0;
+                margin: 0;
+            }
+            .page {
+                padding: 0.2rem 0.4rem;
+                max-width: 100%;
+                margin: 0;
             }
             .segment-content {
                 display: block !important;
             }
             .toggle-icon {
-                display: none;
+                display: none !important;
             }
             .segment-header, .header-modern {
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
+                color-adjust: exact;
+            }
+            .segment-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+                margin-bottom: 0.3rem;
+                border-radius: 8px;
+            }
+            .header-modern {
+                box-shadow: none;
+                margin-bottom: 0.3rem;
+                padding: 0.4rem 0.8rem;
+                border-radius: 10px;
+            }
+            .pdf-actions {
+                display: none !important;
+            }
+            .btn-pdf {
+                display: none !important;
+            }
+            .stats-row, .segmentation-definition, .matrix-card {
+                box-shadow: none;
+                border: 1px solid #eef2f6;
+                margin-bottom: 0.3rem;
+                padding: 0.3rem 0.6rem;
+                border-radius: 8px;
+            }
+            .segment-content {
+                padding: 0 0.6rem 0.4rem 0.6rem;
+            }
+            .segment-header {
+                padding: 0.3rem 0.6rem;
+            }
+            .definition-box, .criterio-box, .example-box {
+                padding: 0.2rem 0.5rem;
+                margin: 0.2rem 0;
+                font-size: 0.6rem;
+            }
+            .scenario-table {
+                font-size: 0.5rem;
+            }
+            .scenario-table th, .scenario-table td {
+                padding: 0.1rem 0.25rem;
+            }
+            .stats-row {
+                padding: 0.2rem 0.6rem;
+                gap: 0.6rem;
+            }
+            .stat-number {
+                font-size: 0.75rem;
+            }
+            .stat {
+                font-size: 0.55rem;
+            }
+            .title-area h1 {
+                font-size: 1rem;
+            }
+            .title-area p {
+                font-size: 0.6rem;
+            }
+            .version-badge {
+                font-size: 0.5rem;
+                padding: 0.1rem 0.5rem;
+            }
+            .logo-natural img {
+                height: 28px;
+                max-width: 100px;
+            }
+            .subsegment-grid {
+                gap: 0.3rem;
+            }
+            .subsegment-card {
+                padding: 0.25rem 0.5rem;
+            }
+            .matrix-card {
+                padding: 0.6rem;
+            }
+            .matrix-steps {
+                gap: 0.15rem;
+                margin: 0.3rem 0;
+            }
+            .step {
+                padding: 0.1rem 0.4rem;
+                font-size: 0.55rem;
+            }
+            .step-num {
+                width: 16px;
+                height: 16px;
+                font-size: 0.45rem;
+            }
+            .footer {
+                padding: 0.3rem;
+                font-size: 0.45rem;
+                margin-top: 0.3rem;
+            }
+            .section-title {
+                font-size: 0.6rem;
+                margin: 0.2rem 0 0.05rem 0;
+            }
+            .rules-box {
+                font-size: 0.55rem;
+                padding: 0.25rem 0.5rem;
+                margin-top: 0.2rem;
+            }
+            .segment-icon {
+                width: 22px;
+                height: 22px;
+                font-size: 0.6rem;
+            }
+            .segment-title {
+                font-size: 0.7rem;
+            }
+            .segment-sub {
+                font-size: 0.45rem;
+            }
+            .segmentation-definition h2 {
+                font-size: 0.7rem;
+            }
+            .segmentation-definition p {
+                font-size: 0.65rem;
+            }
+            .criterio-box ul li, .example-box ul li {
+                font-size: 0.58rem;
+            }
+            .subsegment-card ul li {
+                font-size: 0.55rem;
+            }
+            .subsegment-card .example-box {
+                font-size: 0.55rem;
+                padding: 0.15rem 0.4rem;
+            }
+            .subsegment-title {
+                font-size: 0.6rem;
+            }
+            .matrix-card .segment-header {
+                padding: 0.3rem 0.6rem;
+                margin: -0.6rem -0.6rem 0 -0.6rem;
+                border-radius: 8px 8px 0 0;
+            }
+            .matrix-card .segment-title {
+                font-size: 0.7rem !important;
+            }
+            .matrix-card .segment-sub {
+                font-size: 0.45rem !important;
+            }
+            .matrix-card .segment-icon {
+                width: 22px;
+                height: 22px;
+                font-size: 0.6rem;
             }
         }
     </style>
 </head>
 <body>
-<div class="page">
+<div class="page" id="pdfContent">
+
+    <!-- ===== BOTÓN PDF ===== -->
+    <div class="pdf-actions">
+        <button class="btn-pdf" onclick="generatePDF()">
+            <i class="fas fa-file-pdf"></i> Descargar PDF
+        </button>
+    </div>
+
+    <!-- ===== HEADER ===== -->
     <div class="header-modern">
         <div class="logo-natural">
-            <img src="https://www.agrocampo.com.co/media/logo/websites/1/logo-agrocampo-min.png" alt="Agrocampo · Todo en Veterinaria" onerror="this.src='https://via.placeholder.com/180x50?text=AGROCAMPO'">
+            <img src="https://www.agrocampo.com.co/media/logo/websites/1/logo-agrocampo-min.png" alt="Agrocampo" crossorigin="anonymous" referrerpolicy="no-referrer" loading="eager" onerror="this.style.display='none'">
         </div>
         <div class="title-area">
             <h1>Modelo de Segmentación de Clientes</h1>
@@ -374,15 +710,24 @@
             <i class="far fa-calendar-alt"></i> Junio 2026 · Versión Oficial
         </div>
     </div>
- 
+
+    <!-- ===== DEFINICIÓN ===== -->
+    <div class="segmentation-definition">
+        <h2>¿Qué es la segmentación de clientes?</h2>
+        <p>La segmentación de clientes es el proceso que permite clasificar a cada cliente de <strong>Agrocampo</strong> según su comportamiento de compra, tipo de actividad y relación comercial. Esta clasificación es la base para el análisis comercial, el diseño de estrategias de venta, la asignación de condiciones y el seguimiento de cada tipo de cliente. Un cliente se clasifica en un único segmento operativo principal, determinado por la combinación de criterios descritos en este documento.</p>
+    </div>
+
+    <!-- ===== STATS ===== -->
     <div class="stats-row">
         <div class="stat"><span class="stat-number">7</span> segmentos definidos</div>
         <div class="stat"><span class="stat-number">50</span> escenarios analizados</div>
-        <div class="stat"><span class="stat-number">6</span> line discount codes oficiales</div>
-        <div class="stat"><span class="stat-number">2</span> enfoques de criador (mascotas y ganado)</div>
+        <div class="stat"><span class="stat-number">6</span> line discount codes</div>
+        <div class="stat"><span class="stat-number">2</span> enfoques de criador</div>
     </div>
- 
-    <!-- ==================== RET ==================== -->
+
+    <!-- ============================================================ -->
+    <!-- ==================== RET ===================================== -->
+    <!-- ============================================================ -->
     <div class="segment-card">
         <div class="segment-header" style="background: #2b6e4e;" onclick="toggleSegment(this)">
             <div class="segment-header-left">
@@ -395,112 +740,123 @@
             <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
         </div>
         <div class="segment-content">
+
             <div class="definition-box">
-                <strong>📖 Definición:</strong><br>
-                "Sectores de consumo final = sectores asociados al uso propio del cliente, normalmente para el cuidado, alimentación, bienestar o accesorios de sus mascotas, no para reventa, clínica veterinaria, ganadería, distribución o producción."
+                <strong>📖 Definición:</strong> "Sectores de consumo final = sectores asociados al uso propio del cliente, normalmente para el cuidado, alimentación, bienestar o accesorios de sus mascotas, no para reventa, clínica veterinaria, ganadería, distribución o producción."
             </div>
+
             <div class="definition-box">
                 <strong>Cliente Ret</strong> es aquel que compra principalmente sectores de consumo final: alimentos para mascotas, accesorios, snacks, higiene, arenas, juguetes, camas, collares, correas, guacales y productos básicos de bienestar para uso propio del hogar o de sus mascotas.
             </div>
-           
+
             <div class="criterio-box">
-                <strong>📌 Criterios teóricos para clasificar Ret:</strong><br>
-                • Compra para uso propio<br>
-                • Baja complejidad<br>
-                • Bajo volumen<br>
-                • Mezcla de producto de consumo final<br>
-                • Sin señales fuertes de cliente profesional o negocio
+                <strong>📌 Criterios teóricos:</strong>
+                <ul>
+                    <li>Compra para uso propio</li>
+                    <li>Baja complejidad</li>
+                    <li>Bajo volumen</li>
+                    <li>Mezcla de producto de consumo final</li>
+                    <li>Sin señales fuertes de cliente profesional o negocio</li>
+                </ul>
             </div>
- 
+
             <div class="example-box">
-                <strong>✨ Ejemplo claro de Ret:</strong><br>
-                <strong>Cliente: María Rodríguez</strong><br>
-                • Compra 6 bultos de concentrado de 2kg cada uno (total 12kg) para sus 2 perros durante todo el mes.<br>
-                • Compra una sola marca (la que sus mascotas prefieren).<br>
-                • Cada 2 meses compra un juguete o snack.<br>
-                • Una vez al año compra un desparasitante oral para sus mascotas.<br>
-                • Compra en la tienda física o página web.<br>
-                • Volumen total mensual: bajo (menos de $200.000 COP).<br>
-                • <strong>→ Clasifica como Ret</strong>
+                <strong>✨ Ejemplo: María Rodríguez</strong>
+                <ul>
+                    <li>Compra 6 bultos de 2kg (12kg total) para sus 2 perros al mes</li>
+                    <li>Una sola marca, compra juguete o snack cada 2 meses</li>
+                    <li>Desparasitante oral 1 vez al año</li>
+                    <li>Volumen mensual: bajo (menos de $200.000 COP)</li>
+                    <li><strong>→ Clasifica como Ret</strong></li>
+                </ul>
             </div>
- 
-            <h4 style="margin: 1.5rem 0 0.75rem 0; font-size: 0.9rem;">📋 Escenarios que aplican a Ret</h4>
+
+            <div class="section-title">📋 Escenarios que aplican a Ret</div>
             <table class="scenario-table">
-                <thead><tr><th>#</th><th>Escenario</th><th>Condición para Ret</th></tr></thead>
+                <thead><tr><th>#</th><th>Escenario</th><th>Condición</th></tr></thead>
                 <tbody>
-                    <tr><td class="scenario-num">1</td><td>Cliente que compra por primera vez en un almacén</td><td>Productos consumo final, bajo volumen</td></tr>
-                    <tr><td class="scenario-num">2</td><td>Cliente que compra por primera vez en la página web</td><td>Mismos productos, sin recurrencia profesional</td></tr>
-                    <tr><td class="scenario-num">5</td><td>Cliente que compra una sola categoría de producto</td><td>Alimentos o accesorios</td></tr>
-                    <tr><td class="scenario-num">6</td><td>Cliente que vuelve a comprar en el mismo almacén</td><td>Mantiene bajo volumen</td></tr>
-                    <tr><td class="scenario-num">8</td><td>Cliente que compra únicamente durante promociones</td><td>Volumen bajo, sin reventa</td></tr>
-                    <tr><td class="scenario-num">9</td><td>Cliente que compra únicamente alimento para mascotas</td><td>Para 1-2 mascotas</td></tr>
-                    <tr><td class="scenario-num">10</td><td>Cliente que compra únicamente medicamentos veterinarios</td><td>Uso ocasional (vacuna anual, desparasitante)</td></tr>
-                    <tr><td class="scenario-num">28</td><td>Cliente que cambia de almacén por cercanía geográfica</td><td>No cambia el segmento</td></tr>
-                    <tr><td class="scenario-num">40</td><td>Cliente que compra para varias mascotas o especies</td><td>Solo si volumen bajo (2-3 mascotas)</td></tr>
+                    <tr><td class="scenario-num">1</td><td>Compra por primera vez en almacén</td><td>Productos consumo final, bajo volumen</td></tr>
+                    <tr><td class="scenario-num">2</td><td>Compra por primera vez en web</td><td>Mismos productos, sin recurrencia profesional</td></tr>
+                    <tr><td class="scenario-num">5</td><td>Compra una sola categoría</td><td>Alimentos o accesorios</td></tr>
+                    <tr><td class="scenario-num">6</td><td>Vuelve a comprar en el mismo almacén</td><td>Mantiene bajo volumen</td></tr>
+                    <tr><td class="scenario-num">8</td><td>Compra solo durante promociones</td><td>Volumen bajo, sin reventa</td></tr>
+                    <tr><td class="scenario-num">9</td><td>Compra solo alimento para mascotas</td><td>Para 1-2 mascotas</td></tr>
+                    <tr><td class="scenario-num">10</td><td>Compra solo medicamentos veterinarios</td><td>Uso ocasional (vacuna, desparasitante)</td></tr>
+                    <tr><td class="scenario-num">28</td><td>Cambia de almacén por cercanía</td><td>No cambia el segmento</td></tr>
+                    <tr><td class="scenario-num">40</td><td>Compra para varias mascotas</td><td>Solo si volumen bajo (2-3 mascotas)</td></tr>
                 </tbody>
             </table>
+
         </div>
     </div>
- 
-    <!-- ==================== VET ==================== -->
+
+    <!-- ============================================================ -->
+    <!-- ==================== VET ===================================== -->
+    <!-- ============================================================ -->
     <div class="segment-card">
         <div class="segment-header" style="background: #3b82f6;" onclick="toggleSegment(this)">
             <div class="segment-header-left">
                 <div class="segment-icon"><i class="fas fa-syringe"></i></div>
                 <div>
-                    <div class="segment-title">Vet · Consultorios / Cliente veterinario profesional</div>
+                    <div class="segment-title">Vet · Consultorios / Cliente veterinario</div>
                     <div class="segment-sub">Salud animal · Ldc 12 o 18 · Recurrencia clínica</div>
                 </div>
             </div>
             <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
         </div>
         <div class="segment-content">
+
             <div class="definition-box">
-                <strong>📖 Definición:</strong><br>
-                "Sectores clínicos veterinarios = sectores asociados a salud animal, tratamiento, farmacia veterinaria, medicamentos, insumos clínicos, material médico, vacunas, antiparasitarios, productos terapéuticos o atención profesional de animales."
+                <strong>📖 Definición:</strong> "Sectores clínicos veterinarios = sectores asociados a salud animal, tratamiento, farmacia veterinaria, medicamentos, insumos clínicos, material médico, vacunas, antiparasitarios, productos terapéuticos o atención profesional de animales."
             </div>
+
             <div class="definition-box">
                 <strong>Cliente Vet</strong> es aquel que Agrocampo reconoce comercialmente como veterinaria mediante <strong>line discount code 12 o 18</strong>, o aquel que demuestra un comportamiento profesional veterinario por su concentración relevante y recurrente en medicamentos.
             </div>
- 
+
             <div class="criterio-box">
-                <strong>📌 Criterios teóricos para clasificar Vet:</strong><br>
-                • Grupo de descuento veterinario 12 o 18<br>
-                • Compra recurrente en sectores clínicos veterinarios<br>
-                • Alta participación de medicamentos o farmacia veterinaria<br>
-                • Variedad técnica de productos y sku<br>
-                • Volumen y órdenes suficientes para diferenciarlo de Ret<br>
-                • Sin dominancia de concentrado como única señal
+                <strong>📌 Criterios teóricos:</strong>
+                <ul>
+                    <li>Grupo de descuento veterinario 12 o 18</li>
+                    <li>Compra recurrente en sectores clínicos veterinarios</li>
+                    <li>Alta participación de medicamentos o farmacia veterinaria</li>
+                    <li>Variedad técnica de productos y sku</li>
+                    <li>Volumen y órdenes suficientes para diferenciarlo de Ret</li>
+                    <li>Sin dominancia de concentrado como única señal</li>
+                </ul>
             </div>
- 
+
             <div class="example-box">
-                <strong>✨ Ejemplo claro de Vet:</strong><br>
-                <strong>Cliente: Clínica Veterinaria San Martín</strong><br>
-                • Compra cada semana: 20 vacunas, 15 cajas de antibióticos, 10 antiparasitarios inyectables, material quirúrgico.<br>
-                • No compra concentrado (las clínicas no venden alimentos).<br>
-                • Tiene line discount code 12.<br>
-                • Compra recurrente durante todo el año.<br>
-                • Volumen mensual: más de $2.500.000 COP.<br>
-                • <strong>→ Clasifica como Vet</strong>
+                <strong>✨ Ejemplo: Clínica Veterinaria San Martín</strong>
+                <ul>
+                    <li>Compra semanal: 20 vacunas, 15 antibióticos, 10 antiparasitarios inyectables, material quirúrgico</li>
+                    <li>No compra concentrado (las clínicas no venden alimentos)</li>
+                    <li>Tiene line discount code 12, compra recurrente todo el año</li>
+                    <li>Volumen mensual: más de $2.500.000 COP</li>
+                    <li><strong>→ Clasifica como Vet</strong></li>
+                </ul>
             </div>
- 
-            <h4 style="margin: 1.5rem 0 0.75rem 0; font-size: 0.9rem;">📋 Escenarios que aplican a Vet</h4>
+
+            <div class="section-title">📋 Escenarios que aplican a Vet</div>
             <table class="scenario-table">
-                <thead><tr><th>#</th><th>Escenario</th><th>Condición para Vet</th></tr></thead>
+                <thead><tr><th>#</th><th>Escenario</th><th>Condición</th></tr></thead>
                 <tbody>
-                    <tr><td class="scenario-num">5</td><td>Cliente que compra una sola categoría de producto</td><td>Medicamentos veterinarios en volumen</td></tr>
-                    <tr><td class="scenario-num">10</td><td>Cliente que compra únicamente medicamentos veterinarios</td><td>Recurrente, volumen profesional</td></tr>
-                    <tr><td class="scenario-num">12</td><td>Cliente que solicita una cotización</td><td>Para insumos clínicos</td></tr>
-                    <tr><td class="scenario-num">23</td><td>Cliente que llega referido por un médico veterinario</td><td>Probable Vet</td></tr>
-                    <tr><td class="scenario-num">42</td><td>Veterinaria que inicia compras con Agrocampo</td><td>Directamente Vet</td></tr>
-                    <tr><td class="scenario-num">43</td><td>Veterinaria que amplía compras a varias líneas comerciales</td><td>Confirma comportamiento Vet</td></tr>
-                    <tr><td class="scenario-num">44</td><td>Veterinaria que abre una segunda sede y sigue comprando</td><td>Vet estratégico</td></tr>
+                    <tr><td class="scenario-num">5</td><td>Compra una sola categoría</td><td>Medicamentos veterinarios en volumen</td></tr>
+                    <tr><td class="scenario-num">10</td><td>Compra solo medicamentos veterinarios</td><td>Recurrente, volumen profesional</td></tr>
+                    <tr><td class="scenario-num">12</td><td>Solicita una cotización</td><td>Para insumos clínicos</td></tr>
+                    <tr><td class="scenario-num">23</td><td>Llega referido por un médico veterinario</td><td>Probable Vet</td></tr>
+                    <tr><td class="scenario-num">42</td><td>Veterinaria que inicia compras</td><td>Directamente Vet</td></tr>
+                    <tr><td class="scenario-num">43</td><td>Veterinaria que amplía a varias líneas</td><td>Confirma comportamiento Vet</td></tr>
+                    <tr><td class="scenario-num">44</td><td>Veterinaria con segunda sede</td><td>Vet estratégico</td></tr>
                 </tbody>
             </table>
+
         </div>
     </div>
- 
-    <!-- ==================== B2B ==================== -->
+
+    <!-- ============================================================ -->
+    <!-- ==================== B2B ===================================== -->
+    <!-- ============================================================ -->
     <div class="segment-card">
         <div class="segment-header" style="background: #e67e22;" onclick="toggleSegment(this)">
             <div class="segment-header-left">
@@ -513,60 +869,63 @@
             <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
         </div>
         <div class="segment-content">
+
             <div class="definition-box">
-                <strong>📖 Definición:</strong><br>
-                "Cliente B2B es aquel que compra con lógica de negocio, no con lógica de uso propio. Compra para revender, distribuir, surtir un negocio, abastecer una operación, atender clientes finales, cumplir acuerdos comerciales, realizar compras institucionales o manejar operaciones intercompany."
+                <strong>📖 Definición:</strong> "Cliente B2B es aquel que compra con lógica de negocio, no con lógica de uso propio. Compra para revender, distribuir, surtir un negocio, abastecer una operación, atender clientes finales, cumplir acuerdos comerciales, realizar compras institucionales o manejar operaciones intercompany."
             </div>
+
             <div class="definition-box">
                 <strong>Dentro de B2B se incluyen:</strong><br>
                 <strong>Distribuidor:</strong> Cliente que compra para reventa, distribución o abastecimiento mayorista.<br>
                 <strong>B2R:</strong> Cliente que compra productos de consumo final, pero no para uso propio sino para venderlos o surtir un negocio.<br>
                 <strong>Institucional:</strong> Cliente con acuerdos pactados, ventas institucionales, intercompany, convenios.
             </div>
- 
+
             <div class="criterio-box">
-                <strong>📌 Criterios teóricos para clasificar B2B:</strong><br>
-                • Condición comercial de negocio<br>
-                • Compra para reventa, distribución o abastecimiento<br>
-                • Alto volumen<br>
-                • Alta variedad de sku<br>
-                • Alta recurrencia de órdenes<br>
-                • Múltiples familias o sectores<br>
-                • Acuerdos pactados / intercompany / institucional<br>
-                • Sin lógica de uso propio como consumidor final
+                <strong>📌 Criterios teóricos:</strong>
+                <ul>
+                    <li>Condición comercial de negocio</li>
+                    <li>Compra para reventa, distribución o abastecimiento</li>
+                    <li>Alto volumen, alta variedad de sku, alta recurrencia</li>
+                    <li>Múltiples familias o sectores</li>
+                    <li>Acuerdos pactados / intercompany / institucional</li>
+                    <li>Sin lógica de uso propio como consumidor final</li>
+                </ul>
             </div>
- 
+
             <div class="example-box">
-                <strong>✨ Ejemplo claro de B2B (Distribuidor):</strong><br>
-                <strong>Cliente: Distribuciones El Agro SAS</strong><br>
-                • Compra 20 bultos de concentrado de 3 marcas diferentes (marca A, marca B y marca C) cada 8 días.<br>
-                • Compra 6 presentaciones distintas de antiparasitarios y medicamentos.<br>
-                • Ticket promedio: $5.000.000 COP por orden.<br>
-                • Revende a tiendas de mascotas en toda la región.<br>
-                • <strong>→ Clasifica como B2B distribuidor</strong>
+                <strong>✨ Ejemplo: Distribuciones El Agro SAS</strong>
+                <ul>
+                    <li>Compra 20 bultos de concentrado de 3 marcas cada 8 días</li>
+                    <li>Compra 6 presentaciones de antiparasitarios y medicamentos</li>
+                    <li>Ticket promedio: $5.000.000 COP por orden</li>
+                    <li>Revende a tiendas de mascotas en toda la región</li>
+                    <li><strong>→ Clasifica como B2B distribuidor</strong></li>
+                </ul>
             </div>
- 
-            <h4 style="margin: 1.5rem 0 0.75rem 0; font-size: 0.9rem;">📋 Escenarios que aplican a B2B</h4>
+
+            <div class="section-title">📋 Escenarios que aplican a B2B</div>
             <table class="scenario-table">
-                <thead><tr><th>#</th><th>Escenario</th><th>Condición para B2B</th></tr></thead>
+                <thead><tr><th>#</th><th>Escenario</th><th>Condición</th></tr></thead>
                 <tbody>
-                    <tr><td class="scenario-num">4</td><td>Cliente creado por un vendedor externo</td><td>Frecuentemente B2B</td></tr>
-                    <tr><td class="scenario-num">8</td><td>Cliente que compra únicamente durante promociones</td><td>Alto volumen para reventa</td></tr>
-                    <tr><td class="scenario-num">12</td><td>Cliente que solicita una cotización</td><td>Sugiere volumen institucional</td></tr>
-                    <tr><td class="scenario-num">25</td><td>Cliente captado en una feria agropecuaria</td><td>Puede ser distribuidor</td></tr>
-                    <tr><td class="scenario-num">33</td><td>Cliente que recibe seguimiento de un vendedor externo</td><td>Sugiere cliente estratégico B2B</td></tr>
-                    <tr><td class="scenario-num">34</td><td>Cliente que solicita crédito después de varias compras</td><td>Sugiere volumen de negocio</td></tr>
-                    <tr><td class="scenario-num">35</td><td>Cliente que aumenta su frecuencia de compra</td><td>Puede indicar crecimiento de negocio</td></tr>
-                    <tr><td class="scenario-num">36</td><td>Cliente que aumenta significativamente su ticket promedio</td><td>Sugiere mayor volumen de reventa</td></tr>
-                    <tr><td class="scenario-num">37</td><td>Cliente que comienza a comprar nuevas categorías</td><td>Para ampliar surtido de reventa</td></tr>
-                    <tr><td class="scenario-num">41</td><td>Cliente que compra para varias fincas o sedes</td><td>Sugiere distribución o institucional</td></tr>
-                    <tr><td class="scenario-num">49</td><td>Cliente estratégico con compras recurrentes en múltiples categorías</td><td>Si es por lógica de reventa</td></tr>
+                    <tr><td class="scenario-num">4</td><td>Creado por vendedor externo</td><td>Frecuentemente B2B</td></tr>
+                    <tr><td class="scenario-num">8</td><td>Compra solo durante promociones</td><td>Alto volumen para reventa</td></tr>
+                    <tr><td class="scenario-num">12</td><td>Solicita cotización</td><td>Sugiere volumen institucional</td></tr>
+                    <tr><td class="scenario-num">25</td><td>Captado en feria agropecuaria</td><td>Puede ser distribuidor</td></tr>
+                    <tr><td class="scenario-num">33</td><td>Recibe seguimiento de vendedor externo</td><td>Sugiere cliente estratégico B2B</td></tr>
+                    <tr><td class="scenario-num">34</td><td>Solicita crédito después de varias compras</td><td>Sugiere volumen de negocio</td></tr>
+                    <tr><td class="scenario-num">35-37</td><td>Aumenta frecuencia, ticket o categorías</td><td>Crecimiento de negocio / reventa</td></tr>
+                    <tr><td class="scenario-num">41</td><td>Compra para varias fincas o sedes</td><td>Sugiere distribución o institucional</td></tr>
+                    <tr><td class="scenario-num">49</td><td>Cliente estratégico con compras recurrentes</td><td>Si es por lógica de reventa</td></tr>
                 </tbody>
             </table>
+
         </div>
     </div>
- 
-    <!-- ==================== GAN ==================== -->
+
+    <!-- ============================================================ -->
+    <!-- ==================== GAN ===================================== -->
+    <!-- ============================================================ -->
     <div class="segment-card">
         <div class="segment-header" style="background: #8e5a2b;" onclick="toggleSegment(this)">
             <div class="segment-header-left">
@@ -579,64 +938,63 @@
             <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
         </div>
         <div class="segment-content">
+
             <div class="definition-box">
-                <strong>📖 Definición:</strong><br>
-                "Cliente Gan = cliente cuya compra está asociada a ganadería, producción animal o actividad pecuaria de campo. Compra productos para bovinos, leche, carne, equinos, porcinos, avícola, finca, sales minerales, suplementos ganaderos, antiparasitarios de grandes animales, vacunas, vitaminas pecuarias, concentrados productivos o insumos de producción."
+                <strong>📖 Definición:</strong> "Cliente Gan = cliente cuya compra está asociada a ganadería, producción animal o actividad pecuaria de campo. Compra productos para bovinos, leche, carne, equinos, porcinos, avícola, finca, sales minerales, suplementos ganaderos, antiparasitarios de grandes animales, vacunas, vitaminas pecuarias, concentrados productivos o insumos de producción."
             </div>
+
             <div class="definition-box">
                 <strong>Cliente Gan</strong> es aquel que Agrocampo reconoce comercialmente mediante <strong>line discount code 11, 13, 14, 15 o 17</strong>, o aquel que demuestra una participación ganadera relevante por mezcla de producto, volumen, cantidades significativas y recurrencia.
             </div>
- 
+
             <div class="criterio-box">
-                <strong>📌 Criterios teóricos para clasificar Gan:</strong><br>
-                • Line discount code 11, 13, 14, 15 o 17<br>
-                • Alta participación de sectores ganaderos<br>
-                • Volúmenes o cantidades significativas<br>
-                • Compra asociada a producción pecuaria<br>
-                • Productos de bovinos / leche / carne / equinos / pecuarios<br>
-                • Sin lógica de consumo final Ret<br>
-                • Sin comportamiento clínico Vet como actividad principal
+                <strong>📌 Criterios teóricos:</strong>
+                <ul>
+                    <li>Line discount code 11, 13, 14, 15 o 17</li>
+                    <li>Alta participación de sectores ganaderos</li>
+                    <li>Volúmenes o cantidades significativas</li>
+                    <li>Compra asociada a producción pecuaria</li>
+                    <li>Productos de bovinos / leche / carne / equinos / pecuarios</li>
+                    <li>Sin lógica de consumo final Ret</li>
+                    <li>Sin comportamiento clínico Vet como actividad principal</li>
+                </ul>
             </div>
- 
-            <div class="definition-box">
-                <strong>Subcategorías Gan:</strong><br>
-                <strong>Gan L / Gan Leche:</strong> Cliente ganadero enfocado en producción lechera.<br>
-                <strong>Gan C / Gan Carne:</strong> Cliente ganadero enfocado en producción de carne.<br>
-                <strong>Gan Mixto:</strong> Cliente con comportamiento ganadero amplio.<br>
-                <strong>Gan Equino:</strong> Cliente con foco en equinos, caballos.<br>
-                <strong>Gan Potencial:</strong> Cliente con señales ganaderas, pero todavía sin suficiente evidencia.
+
+            <div class="definition-box" style="font-size:0.65rem; padding:0.3rem 0.6rem;">
+                <strong>Subcategorías:</strong> Gan L (Leche) · Gan C (Carne) · Gan Mixto · Gan Equino · Gan Potencial
             </div>
- 
+
             <div class="example-box">
-                <strong>✨ Ejemplo claro de Gan:</strong><br>
-                <strong>Cliente: Hacienda La Pradera</strong><br>
-                • Compra 9 bultos de concentrado productivo para bovinos cada 15 días (alimento balanceado para 50 cabezas de ganado).<br>
-                • Compra 30 dosis de vacuna para fiebre aftosa.<br>
-                • Compra 20 antiparasitarios para grandes animales.<br>
-                • Tiene line discount code 14.<br>
-                • Volumen mensual: más de $1.800.000 COP.<br>
-                • <strong>→ Clasifica como Gan C (carne)</strong>
+                <strong>✨ Ejemplo: Hacienda La Pradera</strong>
+                <ul>
+                    <li>Compra 9 bultos de concentrado productivo para bovinos cada 15 días (50 cabezas)</li>
+                    <li>Compra 30 dosis de vacuna aftosa y 20 antiparasitarios para grandes animales</li>
+                    <li>Tiene line discount code 14, volumen mensual: más de $1.800.000 COP</li>
+                    <li><strong>→ Clasifica como Gan C (carne)</strong></li>
+                </ul>
             </div>
- 
-            <h4 style="margin: 1.5rem 0 0.75rem 0; font-size: 0.9rem;">📋 Escenarios que aplican a Gan</h4>
+
+            <div class="section-title">📋 Escenarios que aplican a Gan</div>
             <table class="scenario-table">
-                <thead><tr><th>#</th><th>Escenario</th><th>Condición para Gan</th></tr></thead>
+                <thead><tr><th>#</th><th>Escenario</th><th>Condición</th></tr></thead>
                 <tbody>
-                    <tr><td class="scenario-num">5</td><td>Cliente que compra una sola categoría de producto</td><td>Productos pecuarios o para grandes animales</td></tr>
-                    <tr><td class="scenario-num">12</td><td>Cliente que solicita una cotización</td><td>Para insumos ganaderos en volumen</td></tr>
-                    <tr><td class="scenario-num">25</td><td>Cliente captado en una feria agropecuaria</td><td>Altamente probable Gan</td></tr>
-                    <tr><td class="scenario-num">33</td><td>Cliente que recibe seguimiento de un vendedor externo</td><td>Clientes ganaderos estratégicos</td></tr>
-                    <tr><td class="scenario-num">34</td><td>Cliente que solicita crédito después de varias compras</td><td>Para inversión en producción</td></tr>
-                    <tr><td class="scenario-num">35</td><td>Cliente que aumenta su frecuencia de compra</td><td>Ciclos de producción ganadera</td></tr>
-                    <tr><td class="scenario-num">36</td><td>Cliente que aumenta significativamente su ticket promedio</td><td>Mayor volumen de insumos pecuarios</td></tr>
-                    <tr><td class="scenario-num">41</td><td>Cliente que compra para varias fincas o sedes</td><td>Productor ganadero con múltiples predios</td></tr>
-                    <tr><td class="scenario-num">49</td><td>Cliente estratégico con compras recurrentes en múltiples categorías</td><td>Si es producción pecuaria</td></tr>
+                    <tr><td class="scenario-num">5</td><td>Compra una sola categoría</td><td>Productos pecuarios o para grandes animales</td></tr>
+                    <tr><td class="scenario-num">12</td><td>Solicita cotización</td><td>Para insumos ganaderos en volumen</td></tr>
+                    <tr><td class="scenario-num">25</td><td>Captado en feria agropecuaria</td><td>Altamente probable Gan</td></tr>
+                    <tr><td class="scenario-num">33</td><td>Recibe seguimiento de vendedor externo</td><td>Clientes ganaderos estratégicos</td></tr>
+                    <tr><td class="scenario-num">34</td><td>Solicita crédito</td><td>Para inversión en producción</td></tr>
+                    <tr><td class="scenario-num">35-36</td><td>Aumenta frecuencia o ticket</td><td>Ciclos de producción / mayor volumen</td></tr>
+                    <tr><td class="scenario-num">41</td><td>Compra para varias fincas o sedes</td><td>Productor ganadero con múltiples predios</td></tr>
+                    <tr><td class="scenario-num">49</td><td>Cliente estratégico con compras recurrentes</td><td>Si es producción pecuaria</td></tr>
                 </tbody>
             </table>
+
         </div>
     </div>
- 
-    <!-- ==================== BRE ==================== -->
+
+    <!-- ============================================================ -->
+    <!-- ==================== BRE ===================================== -->
+    <!-- ============================================================ -->
     <div class="segment-card">
         <div class="segment-header" style="background: #9b59b6;" onclick="toggleSegment(this)">
             <div class="segment-header-left">
@@ -649,96 +1007,78 @@
             <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
         </div>
         <div class="segment-content">
+
             <div class="definition-box">
-                <strong>📖 Definición:</strong><br>
-                "Cliente Bre = cliente que compra con lógica de crianza, reproducción o mantenimiento recurrente de varios animales, principalmente mascotas. Compra principalmente alimentos, concentrados, nutrición, suplementos, higiene, productos preventivos, desparasitantes, antiparasitarios, productos para cachorros, maternidad, lactancia o cuidado de camadas."
+                <strong>📖 Definición:</strong> "Cliente Bre = cliente que compra con lógica de crianza, reproducción o mantenimiento recurrente de varios animales, principalmente mascotas. Compra principalmente alimentos, concentrados, nutrición, suplementos, higiene, productos preventivos, desparasitantes, antiparasitarios, productos para cachorros, maternidad, lactancia o cuidado de camadas."
             </div>
- 
+
             <div class="criterio-box">
-                <strong>📌 Criterios teóricos para clasificar Bre:</strong><br>
-                • Alta participación en mascotas<br>
-                • Alta participación en concentrados / alimentos<br>
-                • Recurrencia de compra<br>
-                • Volumen superior a consumidor final<br>
-                • Productos asociados a crianza, camadas o mantenimiento<br>
-                • Sin señal clínica fuerte Vet<br>
-                • Sin señal de reventa o distribución B2B
+                <strong>📌 Criterios teóricos:</strong>
+                <ul>
+                    <li>Alta participación en mascotas</li>
+                    <li>Alta participación en concentrados / alimentos</li>
+                    <li>Recurrencia de compra</li>
+                    <li>Volumen superior a consumidor final</li>
+                    <li>Productos asociados a crianza, camadas o mantenimiento</li>
+                    <li>Sin señal clínica fuerte Vet · Sin señal de reventa B2B</li>
+                </ul>
             </div>
- 
+
             <div class="subsegment-grid">
                 <div class="subsegment-card">
-                    <div class="subsegment-title">
-                        <i class="fas fa-dog"></i> Enfoque 1: Criador de mascotas
-                    </div>
-                    <p style="font-size: 0.8rem; margin-top: 0.5rem;">
-                        <strong>Características:</strong><br>
-                        • Perros, gatos, animales de compañía<br>
-                        • Camadas de cachorros (3-15 por camada)<br>
-                        • Productos: concentrado para cachorros, vitaminas, productos de maternidad, lactancia<br>
-                        • Volumen: superior a consumidor final, pero menor que ganadería
-                    </p>
-                    <div class="example-box" style="margin-top: 0.75rem; padding: 0.75rem;">
-                        <strong>✨ Ejemplo: Criador de mascotas</strong><br>
-                        <strong>Criadero Golden Retriever "El Encanto"</strong><br>
-                        • Compra 6 bultos de concentrado para cachorros cada semana (3 bultos de 20kg de marca premium + 3 bultos de 20kg de marca estándar).<br>
-                        • Compra vitaminas y suplementos para 3 camadas simultáneas (15 cachorros).<br>
-                        • Compra productos para maternidad y lactancia.<br>
-                        • Compra recurrente durante meses.<br>
-                        • Volumen mensual: más de $800.000 COP.<br>
-                        • <strong>→ Clasifica como Bre (criador de mascotas)</strong>
+                    <div class="subsegment-title"><i class="fas fa-dog"></i> Enfoque 1: Criador de mascotas</div>
+                    <ul>
+                        <li>Perros, gatos, animales de compañía</li>
+                        <li>Camadas de cachorros (3-15 por camada)</li>
+                        <li>Productos: concentrado para cachorros, vitaminas, maternidad, lactancia</li>
+                        <li>Volumen superior a consumidor final</li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Ejemplo:</strong> Criadero Golden "El Encanto"<br>
+                        Compra 6 bultos de concentrado para cachorros/semana, vitaminas y suplementos para 3 camadas. Volumen: +$800.000 COP/mes. <strong>→ Bre (mascotas)</strong>
                     </div>
                 </div>
- 
                 <div class="subsegment-card">
-                    <div class="subsegment-title">
-                        <i class="fas fa-horse"></i> Enfoque 2: Criador de ganado
+                    <div class="subsegment-title"><i class="fas fa-horse"></i> Enfoque 2: Criador de ganado</div>
+                    <ul>
+                        <li>Bovinos, equinos, animales de producción</li>
+                        <li>Cría, levante, reproducción de ganado</li>
+                        <li>Productos: concentrados, sales minerales, suplementos, vitaminas pecuarias</li>
+                        <li>Volumen alto, orientado a producción</li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Ejemplo:</strong> Hacienda "Los Cedros" (cría bovina)<br>
+                        Compra 12 bultos de concentrado de levante cada 10 días, sales y suplementos para 80 cabezas. Volumen: +$2.000.000 COP/mes. <strong>→ Gan (producción) o Bre (cría)</strong>
                     </div>
-                    <p style="font-size: 0.8rem; margin-top: 0.5rem;">
-                        <strong>Características:</strong><br>
-                        • Bovinos, equinos, animales de producción<br>
-                        • Cría, levante, reproducción de ganado<br>
-                        • Productos: concentrados productivos, sales minerales, suplementos, vitaminas pecuarias<br>
-                        • Volumen: alto, orientado a producción
-                    </p>
-                    <div class="example-box" style="margin-top: 0.75rem; padding: 0.75rem;">
-                        <strong>✨ Ejemplo: Criador de ganado</strong><br>
-                        <strong>Hacienda "Los Cedros" (cría de bovinos)</strong><br>
-                        • Compra 12 bultos de concentrado de levante para terneros cada 10 días.<br>
-                        • Compra sales minerales y suplementos para 80 cabezas de ganado de cría.<br>
-                        • Compra vitaminas pecuarias y productos para maternidad bovina.<br>
-                        • Compra recurrente durante todo el ciclo productivo.<br>
-                        • Volumen mensual: más de $2.000.000 COP.<br>
-                        • <strong>→ Clasifica como Gan (producción) o Bre (cría)</strong>
-                    </div>
-                    <div class="criterio-box" style="margin-top: 0.75rem; font-size: 0.7rem;">
-                        <strong>🔔 Nota importante:</strong> Según el archivo original, si la actividad principal es <strong>producción pecuaria (leche, carne, engorde)</strong>, corresponde al segmento <strong>Gan</strong>. Si el enfoque es exclusivamente <strong>cría y reproducción de ganado</strong> (terneros, potros, levante), puede considerarse <strong>Bre ganado</strong> o <strong>Gan potencial</strong> según el comportamiento.
+                    <div style="font-size:0.55rem; margin-top:0.15rem; padding:0.15rem 0.4rem; background:#fef3c7; border-radius:6px;">
+                        <strong>Nota:</strong> Si es producción (leche, carne, engorde) → <strong>Gan</strong>. Si es solo cría y reproducción → <strong>Bre ganado</strong> o <strong>Gan potencial</strong>.
                     </div>
                 </div>
             </div>
- 
-            <div class="criterio-box" style="margin-top: 1rem;">
-                <strong>🔍 Diferencia clave entre Bre y Gan:</strong><br>
-                • <strong>Bre (criador de mascotas):</strong> Cría de perros, gatos, animales de compañía. Volumen moderado.<br>
-                • <strong>Bre (criador de ganado):</strong> Cría y reproducción de bovinos, equinos. Volumen alto.<br>
-                • <strong>Gan (producción pecuaria):</strong> Producción de leche, carne, engorde. Enfoque en producción final, no solo cría.
+
+            <div class="criterio-box" style="margin-top:0.2rem; font-size:0.65rem; padding:0.3rem 0.6rem;">
+                <strong>🔍 Diferencia clave:</strong> Bre (mascotas) = cría de perros/gatos · Bre (ganado) = cría de bovinos/equinos · Gan = producción final (leche, carne, engorde)
             </div>
- 
-            <h4 style="margin: 1.5rem 0 0.75rem 0; font-size: 0.9rem;">📋 Escenarios que aplican a Bre</h4>
+
+            <div class="section-title">📋 Escenarios que aplican a Bre</div>
             <table class="scenario-table">
-                <thead><tr><th>#</th><th>Escenario</th><th>Condición para Bre</th><tr></thead>
+                <thead><tr><th>#</th><th>Escenario</th><th>Condición</th></tr></thead>
                 <tbody>
-                    <tr><td class="scenario-num">9</td><td>Cliente que compra únicamente alimento para mascotas</td><td>Volumen superior a consumidor final</td></tr>
-                    <tr><td class="scenario-num">29</td><td>Cliente que empieza comprando una referencia y amplía portafolio</td><td>Para diferentes etapas de crianza</td></tr>
-                    <tr><td class="scenario-num">35</td><td>Cliente que aumenta su frecuencia de compra</td><td>Más animales o camadas</td></tr>
-                    <tr><td class="scenario-num">36</td><td>Cliente que aumenta significativamente su ticket promedio</td><td>Más animales a cargo</td></tr>
-                    <tr><td class="scenario-num">37</td><td>Cliente que comienza a comprar nuevas categorías</td><td>Productos para cachorros, maternidad</td></tr>
-                    <tr><td class="scenario-num">40</td><td>Cliente que compra para varias mascotas o especies</td><td>Definición clave de Bre</td></tr>
+                    <tr><td class="scenario-num">9</td><td>Compra solo alimento para mascotas</td><td>Volumen superior a consumidor final</td></tr>
+                    <tr><td class="scenario-num">29</td><td>Empieza con una referencia y amplía</td><td>Para diferentes etapas de crianza</td></tr>
+                    <tr><td class="scenario-num">35</td><td>Aumenta frecuencia de compra</td><td>Más animales o camadas</td></tr>
+                    <tr><td class="scenario-num">36</td><td>Aumenta ticket promedio</td><td>Más animales a cargo</td></tr>
+                    <tr><td class="scenario-num">37</td><td>Comienza a comprar nuevas categorías</td><td>Productos para cachorros, maternidad</td></tr>
+                    <tr><td class="scenario-num">40</td><td>Compra para varias mascotas o especies</td><td>Definición clave de Bre</td></tr>
                 </tbody>
             </table>
+
         </div>
     </div>
- 
-    <!-- ==================== MKT ==================== -->
+
+    <!-- ============================================================ -->
+    <!-- ==================== MKT ===================================== -->
+    <!-- ============================================================ -->
     <div class="segment-card">
         <div class="segment-header" style="background: #0e7c8a;" onclick="toggleSegment(this)">
             <div class="segment-header-left">
@@ -751,45 +1091,51 @@
             <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
         </div>
         <div class="segment-content">
+
             <div class="definition-box">
-                <strong>📖 Definición:</strong><br>
-                "Cliente Mkt = cliente cuya venta está dominada por el sector web. Cliente Mkt es aquel que concentra más del 59% de sus ventas en el sector web, lo que indica una relación comercial principalmente digital con Agrocampo."
+                <strong>📖 Definición:</strong> "Cliente Mkt = cliente cuya venta está dominada por el sector web. Cliente Mkt es aquel que concentra más del 59% de sus ventas en el sector web, lo que indica una relación comercial principalmente digital con Agrocampo."
             </div>
- 
+
             <div class="criterio-box">
-                <strong>📌 Criterios teóricos para clasificar Mkt:</strong><br>
-                • Ventas web > 59%<br>
-                • Dominancia del sector digital<br>
-                • Relación comercial principalmente web<br>
-                • No es compra web ocasional<br>
-                • Puede cruzarse con Ret, Vet, B2B, Gan o Bre
+                <strong>📌 Criterios teóricos:</strong>
+                <ul>
+                    <li>Ventas web > 59%</li>
+                    <li>Dominancia del sector digital</li>
+                    <li>Relación comercial principalmente web</li>
+                    <li>No es compra web ocasional</li>
+                    <li>Puede cruzarse con Ret, Vet, B2B, Gan o Bre</li>
+                </ul>
             </div>
- 
+
             <div class="example-box">
-                <strong>✨ Ejemplo claro de Mkt:</strong><br>
-                <strong>Cliente: Comprador digital</strong><br>
-                • El 85% de sus compras del último año fueron por la página web de Agrocampo.<br>
-                • El 15% restante por call center o tienda física.<br>
-                • Puede ser Ret, Vet, B2B, Gan o Bre en su comportamiento principal.<br>
-                • <strong>→ Se etiqueta como Mkt + [segmento principal]</strong>
+                <strong>✨ Ejemplo: Comprador digital</strong>
+                <ul>
+                    <li>85% de sus compras del último año fueron por la web</li>
+                    <li>15% por call center o tienda física</li>
+                    <li>Puede ser Ret, Vet, B2B, Gan o Bre en su comportamiento principal</li>
+                    <li><strong>→ Se etiqueta como Mkt + [segmento principal]</strong></li>
+                </ul>
             </div>
- 
-            <h4 style="margin: 1.5rem 0 0.75rem 0; font-size: 0.9rem;">📋 Escenarios que aplican a Mkt</h4>
+
+            <div class="section-title">📋 Escenarios que aplican a Mkt</div>
             <table class="scenario-table">
-                <thead><tr><th>#</th><th>Escenario</th><th>Condición para Mkt</th></tr></thead>
+                <thead><tr><th>#</th><th>Escenario</th><th>Condición</th></tr></thead>
                 <tbody>
-                    <tr><td class="scenario-num">2</td><td>Cliente que compra por primera vez en la página web</td><td>Si sostiene >59% de compras web</td></tr>
-                    <tr><td class="scenario-num">7</td><td>Cliente que realiza una segunda compra en la web</td><td>Potencial Mkt si continúa</td></tr>
-                    <tr><td class="scenario-num">18</td><td>Cliente que compra en web y luego vuelve a comprar en web</td><td>Fortalecimiento de patrón digital</td></tr>
-                    <tr><td class="scenario-num">21</td><td>Cliente que compra por primera vez gracias a una campaña digital</td><td>Origen digital, potencial Mkt</td></tr>
-                    <tr><td class="scenario-num">45</td><td>Cliente que migra completamente de almacén a web</td><td>Si supera 59% → Mkt</td></tr>
-                    <tr><td class="scenario-num">46</td><td>Cliente que migra de venta externa a compras digitales</td><td>Si supera 59% → Mkt</td></tr>
+                    <tr><td class="scenario-num">2</td><td>Compra por primera vez en web</td><td>Si sostiene >59% de compras web</td></tr>
+                    <tr><td class="scenario-num">7</td><td>Segunda compra en web</td><td>Potencial Mkt si continúa</td></tr>
+                    <tr><td class="scenario-num">18</td><td>Compra en web y vuelve a comprar</td><td>Fortalecimiento de patrón digital</td></tr>
+                    <tr><td class="scenario-num">21</td><td>Primera compra por campaña digital</td><td>Origen digital, potencial Mkt</td></tr>
+                    <tr><td class="scenario-num">45</td><td>Migra de almacén a web</td><td>Si supera 59% → Mkt</td></tr>
+                    <tr><td class="scenario-num">46</td><td>Migra de venta externa a digital</td><td>Si supera 59% → Mkt</td></tr>
                 </tbody>
             </table>
+
         </div>
     </div>
- 
-    <!-- ==================== EXT ==================== -->
+
+    <!-- ============================================================ -->
+    <!-- ==================== EXT ===================================== -->
+    <!-- ============================================================ -->
     <div class="segment-card">
         <div class="segment-header" style="background: #c0392b;" onclick="toggleSegment(this)">
             <div class="segment-header-left">
@@ -802,58 +1148,64 @@
             <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
         </div>
         <div class="segment-content">
+
             <div class="definition-box">
-                <strong>📖 Definición:</strong><br>
-                "Cliente Ext = cliente del exterior o relacionado con operaciones internacionales, exportación, intercompany o compañías fuera de Colombia. Cliente Ext es aquel que Agrocampo identifica directamente como cliente exterior por código de cliente, razón social, país, operación internacional o marcación comercial."
+                <strong>📖 Definición:</strong> "Cliente Ext = cliente del exterior o relacionado con operaciones internacionales, exportación, intercompany o compañías fuera de Colombia. Cliente Ext es aquel que Agrocampo identifica directamente como cliente exterior por código de cliente, razón social, país, operación internacional o marcación comercial."
             </div>
- 
+
             <div class="criterio-box">
-                <strong>📌 Criterios teóricos para clasificar Ext:</strong><br>
-                • Cliente del exterior<br>
-                • Operación internacional / exportación<br>
-                • Intercompany o compañía relacionada<br>
-                • Identificación directa por código de cliente<br>
-                • No depende del canal ni de la mezcla de producto
+                <strong>📌 Criterios teóricos:</strong>
+                <ul>
+                    <li>Cliente del exterior</li>
+                    <li>Operación internacional / exportación</li>
+                    <li>Intercompany o compañía relacionada</li>
+                    <li>Identificación directa por código de cliente</li>
+                    <li>No depende del canal ni de la mezcla de producto</li>
+                </ul>
             </div>
- 
+
             <div class="example-box">
-                <strong>✨ Ejemplo claro de Ext:</strong><br>
-                <strong>Cliente: Agroecuador S.A.</strong><br>
-                • Razón social con país: Ecuador.<br>
-                • Código de cliente marcado como exterior en el sistema.<br>
-                • Compra para distribución en su país.<br>
-                • <strong>→ Clasifica como Ext</strong>
+                <strong>✨ Ejemplo: Agroecuador S.A.</strong>
+                <ul>
+                    <li>Razón social con país: Ecuador</li>
+                    <li>Código de cliente marcado como exterior</li>
+                    <li>Compra para distribución en su país</li>
+                    <li><strong>→ Clasifica como Ext</strong></li>
+                </ul>
             </div>
- 
-            <h4 style="margin: 1.5rem 0 0.75rem 0; font-size: 0.9rem;">📋 Escenarios que aplican a Ext</h4>
+
+            <div class="section-title">📋 Escenarios que aplican a Ext</div>
             <table class="scenario-table">
-                <thead><tr><th>#</th><th>Escenario</th><th>Condición para Ext</th></tr></thead>
+                <thead><tr><th>#</th><th>Escenario</th><th>Condición</th></tr></thead>
                 <tbody>
-                    <tr><td class="scenario-num">4</td><td>Cliente creado por un vendedor externo</td><td>Si el vendedor opera desde el exterior o es un agente internacional</td></tr>
-                    <tr><td class="scenario-num">12</td><td>Cliente que solicita una cotización</td><td>Si es desde el exterior o con fines de exportación</td></tr>
-                    <tr><td class="scenario-num">25</td><td>Cliente captado en una feria agropecuaria</td><td>Si es internacional o participa en ferias fuera del país</td></tr>
-                    <tr><td class="scenario-num">33</td><td>Cliente que recibe seguimiento de un vendedor externo</td><td>Si el vendedor es internacional o el cliente está fuera del país</td></tr>
-                    <tr><td class="scenario-num">41</td><td>Cliente que compra para varias fincas o sedes</td><td>Si alguna de las sedes está en el exterior</td></tr>
-                    <tr><td class="scenario-num">49</td><td>Cliente estratégico con compras recurrentes en múltiples categorías</td><td>Si opera en el mercado internacional o es un importador/exportador</td></tr>
-                    <tr><td class="scenario-num">50</td><td>Cliente captado en evento, activado por vendedor, compra por web, entra al Agroclub y se vuelve estratégico</td><td>Si el evento o vendedor es internacional</td></tr>
+                    <tr><td class="scenario-num">4</td><td>Creado por vendedor externo</td><td>Si el vendedor opera desde el exterior</td></tr>
+                    <tr><td class="scenario-num">12</td><td>Solicita cotización</td><td>Si es desde el exterior o con fines de exportación</td></tr>
+                    <tr><td class="scenario-num">25</td><td>Captado en feria agropecuaria</td><td>Si es internacional o participa en ferias fuera del país</td></tr>
+                    <tr><td class="scenario-num">33</td><td>Recibe seguimiento de vendedor externo</td><td>Si el vendedor es internacional</td></tr>
+                    <tr><td class="scenario-num">41</td><td>Compra para varias fincas o sedes</td><td>Si alguna sede está en el exterior</td></tr>
+                    <tr><td class="scenario-num">49</td><td>Cliente estratégico con compras recurrentes</td><td>Si opera en el mercado internacional</td></tr>
+                    <tr><td class="scenario-num">50</td><td>Cliente captado en evento, activado, compra web, entra al Agroclub</td><td>Si el evento o vendedor es internacional</td></tr>
                 </tbody>
             </table>
+
         </div>
     </div>
- 
-    <!-- ==================== Matriz de decisión ==================== -->
+
+    <!-- ============================================================ -->
+    <!-- ==================== MATRIZ ================================== -->
+    <!-- ============================================================ -->
     <div class="matrix-card">
-        <div class="segment-header" style="background: #1e5a6b; cursor: pointer; border-radius: 20px; margin: -1.75rem -1.75rem 0 -1.75rem; padding: 1.25rem 1.75rem;" onclick="toggleMatrix()">
+        <div class="segment-header" style="background: #1e5a6b; cursor: pointer; border-radius: 14px; margin: -1rem -1rem 0 -1rem; padding: 0.5rem 1rem;" onclick="toggleMatrix()">
             <div class="segment-header-left">
                 <div class="segment-icon"><i class="fas fa-diagram-project"></i></div>
                 <div>
-                    <div class="segment-title" style="color: white;">Matriz de decisión para clasificar</div>
-                    <div class="segment-sub" style="color: rgba(255,255,255,0.8);">Sigue estos pasos en orden</div>
+                    <div class="segment-title" style="color: white; font-size:0.75rem;">Matriz de decisión para clasificar</div>
+                    <div class="segment-sub" style="color: rgba(255,255,255,0.8); font-size:0.5rem;">Sigue estos pasos en orden</div>
                 </div>
             </div>
-            <div class="toggle-icon" id="matrixToggleIcon"><i class="fas fa-chevron-down"></i></div>
+            <div class="toggle-icon" id="matrixToggleIcon" style="color:white;"><i class="fas fa-chevron-down"></i></div>
         </div>
-        <div id="matrixContent" class="matrix-steps" style="margin-top: 1.5rem;">
+        <div id="matrixContent" class="matrix-steps">
             <div class="step"><div class="step-num">1</div><div><strong>¿Es cliente del exterior?</strong> → <span class="badge badge-ext">Ext</span></div></div>
             <div class="step"><div class="step-num">2</div><div><strong>¿Más del 59% de sus ventas son por web?</strong> → <span class="badge badge-mkt">Mkt</span> (se suma al segmento base)</div></div>
             <div class="step"><div class="step-num">3</div><div><strong>¿Compra concentrado con patrón de reventa?</strong> → <span class="badge badge-b2b">B2B</span> (nunca Ret ni Vet)</div></div>
@@ -863,21 +1215,16 @@
             <div class="step"><div class="step-num">7</div><div><strong>¿Compra para revender o tiene acuerdos?</strong> → <span class="badge badge-b2b">B2B</span></div></div>
             <div class="step"><div class="step-num">8</div><div><strong>Si no aplica nada anterior → <span class="badge badge-ret">Ret</span></strong></div></div>
         </div>
-        <div style="margin-top: 1rem; padding: 1rem; background: #f1f5f9; border-radius: 16px;">
-            <strong>🔔 Reglas clave (textuales del archivo):</strong><br>
-            • El canal no define segmento<br>
-            • Line discount code 99 no clasifica el segmento<br>
-            • Una compra no define segmento profesional<br>
-            • No todo medicamento lo convierte en Vet: si es para grandes animales, fortalece Gan
+        <div class="rules-box">
+            <strong>🔔 Reglas clave:</strong> El canal no define segmento · Line discount code 99 no clasifica · Una compra no define segmento profesional · No todo medicamento lo convierte en Vet: si es para grandes animales, fortalece Gan
         </div>
     </div>
- 
+
     <div class="footer">
-        📄 Informe basado en criterios ag.xlsx · Segmentación oficial Agrocampo<br>
-        Incluye dos enfoques de criador: mascotas (perros, gatos) y ganado (bovinos, equinos) · Junio 2026
+        📄 Informe basado en criterios ag.xlsx · Segmentación oficial Agrocampo · Junio 2026
     </div>
 </div>
- 
+
 <script>
     function toggleSegment(header) {
         const content = header.nextElementSibling;
@@ -893,7 +1240,7 @@
             }
         }
     }
- 
+
     function toggleMatrix() {
         const content = document.getElementById('matrixContent');
         const icon = document.getElementById('matrixToggleIcon').querySelector('i');
@@ -907,7 +1254,47 @@
             icon.classList.add('fa-chevron-right');
         }
     }
- 
+
+    function generatePDF() {
+        const element = document.getElementById('pdfContent');
+        const btn = document.querySelector('.btn-pdf');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando...';
+        btn.disabled = true;
+
+        const opt = {
+            margin: [0.2, 0.25, 0.2, 0.25],
+            filename: 'Modelo_Segmentacion_Clientes_Agrocampo.pdf',
+            image: { type: 'jpeg', quality: 1.0 },
+            html2canvas: {
+                scale: 3,
+                useCORS: true,
+                letterRendering: true,
+                scrollY: 0,
+                windowHeight: element.scrollHeight,
+                logging: false,
+                backgroundColor: '#ffffff'
+            },
+            jsPDF: {
+                unit: 'in',
+                format: 'a4',
+                orientation: 'portrait',
+                compress: false
+            },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+        };
+
+        html2pdf().set(opt).from(element).save().then(function() {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }).catch(function(err) {
+            console.error('Error:', err);
+            btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error';
+            btn.disabled = false;
+        });
+    }
+
+    // Abrir todos los segmentos por defecto
     document.querySelectorAll('.segment-content').forEach(content => {
         content.classList.remove('hidden');
     });
